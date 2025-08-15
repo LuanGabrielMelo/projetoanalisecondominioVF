@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Despesas Água e Luz Condomínio Paraíso Tropical</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+        <link rel="stylesheet" href="../style/estilizandopg.css" />
+    </head>
+    <body>
+        <div class="container">
+            <header class="header">
+                <h1>Despesas Água e Luz Condomínio Paraíso Tropical</h1>
+                <p>Sistema de Gestão e Análise de Consumo</p>
+            </header>
+
+            <main class="main-content">
+                <!-- Seção de Upload de Arquivo -->
+                <div class="section">
+                    <h2 class="section-title">Carregar Dados</h2>
+                    <div class="form-group">
+                        <label class="file-upload">
+                            Carregar Arquivo Excel (.xlsx)
+                            <input
+                                type="file"
+                                id="fileInput"
+                                accept=".xlsx,.xls"
+                            />
+                        </label>
+                    </div>
+                    <div id="fileStatus"></div>
+                </div>
+
+                <!-- Seção de Entrada de Dados -->
+                <div class="section" alt="center">
+                    <h2 class="section-title" alt="center">
+                        Inserir Novo Consumo
+                    </h2>
+                    <form id="dataForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Data do Consumo</label>
+                                <input
+                                    type="date"
+                                    id="date"
+                                    name="date"
+                                    required
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="source">Origem do Consumo</label>
+                                <select id="source" name="source" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="embasa">
+                                        Embasa (Água)
+                                    </option>
+                                    <option value="coelba">Coelba (Luz)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="consumption"
+                                    >Quantidade Gasta</label
+                                >
+                                <input
+                                    type="number"
+                                    id="consumption"
+                                    name="consumption"
+                                    step="0.01"
+                                    placeholder="Ex: 12.50"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn">
+                                Adicionar Consumo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Seção de Resultados -->
+                <div class="section" id="resultsSection" style="display: none">
+                    <h2 class="section-title">Análise de Consumo</h2>
+                    <div class="results-grid" id="resultsGrid"></div>
+                </div>
+
+                <!-- Seção de Análise de Tendências Mensais -->
+                <div
+                    class="trends-section"
+                    id="trendsSection"
+                    style="display: none"
+                >
+                    <h2 class="trends-title">Análise de Tendências Mensais</h2>
+                    <div class="trends-grid">
+                        <div class="trends-chart-container">
+                            <div class="trends-chart-title">
+                                Tendência de Consumo Mensal (Média Diária)
+                            </div>
+                            <canvas id="monthlyTrendsChart"></canvas>
+                        </div>
+                        <div class="trends-chart-container">
+                            <div class="trends-chart-title">
+                                Variação Percentual Mensal
+                            </div>
+                            <canvas id="monthlyVariationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção de Análise Mensal -->
+                <div
+                    class="section"
+                    id="monthlyAnalysisSection"
+                    style="display: none"
+                ></div>
+
+                <!-- Tabela de Dados -->
+                <div
+                    class="section"
+                    id="dataTableSection"
+                    style="display: none"
+                >
+                    <h2 class="section-title">Histórico de Consumo</h2>
+                    <table class="data-table" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Origem</th>
+                                <th>Consumo Total</th>
+                                <th>Dif_dia</th>
+                                <th>Unidade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody"></tbody>
+                    </table>
+                </div>
+
+                <!-- Seção de Gráficos -->
+                <div
+                    class="section charts-section"
+                    id="chartsSection"
+                    style="display: none"
+                >
+                    <h2 class="chart-section-title">Análise Gráfica</h2>
+                    <div class="charts-grid">
+                        <div class="chart-container">
+                            <canvas id="waterChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="energyChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="monthlyTotalChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botão para Download -->
+                <div class="section" id="downloadSection" style="display: none">
+                    <h2 class="section-title">Exportar Dados</h2>
+                    <button id="downloadBtn" class="btn">
+                        Baixar Relatório Excel
+                    </button>
+                </div>
+            </main>
+        </div>
+        <script src="./pginifunc.js"></script>
+    </body>
+</html>
